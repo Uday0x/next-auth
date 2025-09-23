@@ -7,7 +7,7 @@ import { Email } from "@/helpers/email";
 connectDb()
 
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
         //get the data from req.body
         //email,username,password

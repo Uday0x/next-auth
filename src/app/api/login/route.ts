@@ -1,13 +1,13 @@
 import { connectDb } from "@/dbConfig/connect";
 import User from "@/models/userSchema";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 
 
 connectDb() //run the database
-export  async function POST(request: Request) {
+export  async function POST(request: NextRequest) {
 
     try {
         const reqbody = await request.json();
@@ -58,6 +58,7 @@ export  async function POST(request: Request) {
             message: "Login successful",
             success: true,
         })
+        //here no need to write extra code for setting up teh cookie u can directly use it here unlinke the one in exporess
         response.cookies.set("token", token, {
             httpOnly: true, 
             
