@@ -22,9 +22,9 @@ export async function POST(request: Request) {
         const user = await User.findOne({email}) // this is the shorthand notation {email : email } //because findone accepts objects
 
 
-        if(!user){
-            console.log("user cannot be found")
-             NextResponse.json({error: "User cannot be found "}, {status: 400})
+        if(user){
+            console.log("user already exits")
+             NextResponse.json({error: "User already exists"}, {status: 400})
         }
 
         // const NewUser = await User.create()  if craete method is craeted then no ned to use .save  method )
