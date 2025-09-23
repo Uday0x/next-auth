@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { type } from 'os';
+
 
 const userSchema = new mongoose.Schema({
     username:{
@@ -7,6 +7,10 @@ const userSchema = new mongoose.Schema({
         required:true,
     },
     passoword:{
+        type:String,
+        required:true
+    },
+    email:{
         type:String,
         required:true
     },
