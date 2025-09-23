@@ -13,8 +13,7 @@ export async function GET(request:NextRequest) {
             _id:userId
         }).select("-password")
         console.log("user in me route",user)
-        
-    
+
         return NextResponse.json({
             message:"data sent",
             data:user
