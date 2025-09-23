@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    passoword:{
+    password:{
         type:String,
         required:true
     },
@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model.users || mongoose.model("users",userSchema) 
+const User = mongoose.models.users || mongoose.model("users",userSchema) //mongoose.models is object in whcih previously defined models are kept
 //since next js runs on edge this functionality is required no matter wt
 
 export default User

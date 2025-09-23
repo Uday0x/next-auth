@@ -5,11 +5,12 @@ import User from "@/models/userSchema.js"
 
 
 export const Email = async({email,emailType,userID}:any)=>{
- 
+  console.log(email,emailType)
+ console.log(userID)
 
   try {
     const hashedToken = await bcrypt.hash(userID.toString(),10)
-  
+    console.log(userID)
   
     if(emailType == "VERIFY"){
         await User.findByIdAndUpdate(userID,{

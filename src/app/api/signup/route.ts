@@ -24,14 +24,15 @@ export async function POST(request: Request) {
 
         if(!user){
             console.log("user cannot be found")
-             return NextResponse.json({error: "User already exists"}, {status: 400})
+             NextResponse.json({error: "User cannot be found "}, {status: 400})
         }
 
         // const NewUser = await User.create()  if craete method is craeted then no ned to use .save  method )
 
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
-        const NewUser = new User({
+        console.log("error after thsi rt?")
+        const NewUser = await new User({
             username,
             email,
             password:hashedPassword
@@ -41,7 +42,7 @@ export async function POST(request: Request) {
         console.log(savedUser)
 
 
-        await Email({email, emailType: "VERIFY", userId: savedUser._id})
+        await Email({email, emailType: "VERIFY", userID: savedUser._id})
          return NextResponse.json({
             message: "User created successfully",
             success: true,
