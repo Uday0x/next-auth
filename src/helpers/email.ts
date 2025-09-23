@@ -9,18 +9,24 @@ export const Email = async({email,emailType,userID}:any)=>{
  console.log(userID)
 
   try {
+    console.log("entering hash")
     const hashedToken = await bcrypt.hash(userID.toString(),10)
     console.log(userID)
   
     if(emailType == "VERIFY"){
-        await User.findByIdAndUpdate(userID,{
+        await User.findByIdAndUpdate(userID,
+         { $set :{
           verifyToken:hashedToken,
-          verifyTokenExpiry:Date.now() + 3600000
-        })
+          verifyTokenExpiry:new Date (Date.now() + 3600000)
+        },
+      })
+
     }else if(emailType == "RESET"){
-      await User.findByIdAndUpdate(userID,{
+      await User.findByIdAndUpdate(userID,
+        { $set :{
          forgotPasswordtoken:hashedToken,
-          forgotPasswordtokenExpiry:Date.now() + 3600000
+          forgotPasswordtokenExpiry:new Date (Date.now() + 3600000)
+        },
       })
     }
   
@@ -41,7 +47,7 @@ export const Email = async({email,emailType,userID}:any)=>{
       from:"uday@gamil.com",
       to:email,
       subject:emailType == "VERIFY" ? "VERIFY YOUR EMAIL" :"RESET YOUR EMAIL",
-      html:`<p> click <a href="${process.env.DOMAIN}/verifyemail?token=${hashedToken}">here </a> to ${emailType == "verify"? "verify your email" : "reset your passowrd"}  or copy paste the below link ${process.env.DOMAIN}/verifyemail?token=${hashedToken}`
+      html:`<p> click <a href="${process.env.DOMAIN}/verifyemail?token=${hashedToken}">here </a> to ${emailType == "VERIFY"? "verify your email" : "reset your passowrd"}  or copy paste the below link ${process.env.DOMAIN}/verifyemail?token=${hashedToken}`
   }
   
    const mailResponse =await transporter.sendMail(mailOptions)

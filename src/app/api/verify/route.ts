@@ -27,9 +27,14 @@ export async function POST (request:NextRequest){
 
 
         const user =await User.findOne({
+            
             verifyToken:token,
-            verifyTokenExpiry:{$gt : Date.now()}
+            verifyTokenExpiry:{$gt : Date.now()} //expiry should be greater than current date
         })
+        // console.log("token received",token)
+        // console.log(user.verifyTokenExpiry)
+        // console.log("user found by token",user)
+        console.log("User in DB", await User.findOne({ verifyToken: token }));
 
         if(!user){
             return NextResponse.json("User not found")

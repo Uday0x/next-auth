@@ -12,9 +12,11 @@ export async function GET(request:NextRequest) {
         const user = await User.findOne({
             _id:userId
         }).select("-password")
+        console.log("user in me route",user)
+        
     
         return NextResponse.json({
-            message:"data sent ",
+            message:"data sent",
             data:user
         })
     } catch (error:any) {
